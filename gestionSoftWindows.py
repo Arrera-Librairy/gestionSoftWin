@@ -21,8 +21,18 @@ class gestionSoftWindows :
             return True
     
     def saveSoftware(self)->bool:
-        self.racourcieSoft =os.path.abspath(self.__emplacement+"/"+self.name+".lnk")
-        emplacement = askopenfilename(defaultextension=".lnk", filetypes=[("Racourcie", ".lnk")])
+        self.racourcieSoft = os.path.abspath(self.__emplacement + "/" + self.name + ".lnk")
+        reponse = messagebox.askyesno("Raccourci","voulez-vous aller choisir un racourcie dans le menu démarer utilisateur ?")
+
+        if reponse :
+            emplacement = askopenfilename(defaultextension=".lnk",
+                                          initialdir=os.path.join(os.getenv("APPDATA"), "Microsoft", "Windows", "Start Menu", "Programs") ,
+                                          filetypes=[("Racourcie", ".lnk")])
+        else :
+            emplacement = askopenfilename(defaultextension=".lnk",
+                                          initialdir="C:\ProgramData\Microsoft\Windows\Start Menu\Programs",
+                                          filetypes=[("Racourcie", ".lnk")])
+
         if emplacement:
             shutil.copyfile(emplacement,self.racourcieSoft)
             return True
